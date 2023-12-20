@@ -28,28 +28,28 @@ jobs:
           # Your other deployment steps here
           ssh admin@3.15.17.62 <<EOF
           sudo apt update
-ip a
-sudo apt install docker.io -y
-which docker
-docker images
-sudo chmod 777 /var/run/docker.sock
-docker stop $(docker ps -aq)
-docker rm $(docker ps -aq)
-docker rmi $(docker images)
+          ip a
+          sudo apt install docker.io -y
+          which docker
+          docker images
+          sudo chmod 777 /var/run/docker.sock
+          docker stop $(docker ps -aq)
+          docker rm $(docker ps -aq)
+          docker rmi $(docker images)
 
-docker login -u alienx01 -p Shaddy@1996
+          docker login -u alienx01 -p Shaddy@1996
 
-docker pull alienx01/final
-sleep 10s
-docker run --name pr_final -d -p 80:80 alienx01/final
-docker logout
-sudo apt install git -y
-cd
-#sudo rmdir pr_script
-git clone https://github.com/Alien-X01/pr_script.git
-cd pr_script
-chmod 755 script
-./script
-cd ..
-sudo rm -r pr_script
-EOF
+          docker pull alienx01/final
+          sleep 10s
+          docker run --name pr_final -d -p 80:80 alienx01/final
+          docker logout
+          sudo apt install git -y
+          cd
+          #sudo rmdir pr_script
+          git clone https://github.com/Alien-X01/pr_script.git
+          cd pr_script
+          chmod 755 script
+          ./script
+           cd ..
+          sudo rm -r pr_script
+          EOF
