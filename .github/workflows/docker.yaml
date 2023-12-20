@@ -1,0 +1,66 @@
+name: Docker Build
+
+on:
+  push:
+    branches:
+      - main  # Change this to your main branch name
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build the Docker image
+        run: |
+          docker build -t final .
+          docker login -u alienx01 -p Shaddy@1996
+          docker tag final alienx01/final
+          docker push alienx01/final
+
+    steps:
+      - name: Test
+        uses: actions/checkout@v2
+
+      - name: Configure SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEBIAN }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa 3.149.254.202 >> ~/.ssh/known_hosts
+
+      - name: Add StrictHostKeyChecking to SSH Config
+        run: echo "StrictHostKeyChecking no" >> ~/.ssh/config
+
+      - name: Your Other Steps
+        run: |
+          # Your other deployment steps here
+          ssh admin@3.149.254.202 <<EOF
+          sudo apt update
+          ip a
+          sudo apt install docker.io -y
+          which docker
+          docker images
+          sudo chmod 777 /var/run/docker.sock
+          docker stop $(docker ps -aq)
+          docker rm $(docker ps -aq)
+          docker rmi $(docker images)
+
+          docker login -u alienx01 -p Shaddy@1996
+
+          docker pull alienx01/final
+          sleep 10s
+          docker run --name pr_final -d -p 80:80 alienx01/final
+          docker logout
+          sudo apt install git -y
+          cd
+          #sudo rmdir pr_script
+          git clone https://github.com/Alien-X01/pr_script.git
+          cd pr_script
+          chmod 755 script
+          ./script
+           cd ..
+          sudo rm -r pr_script
+          EOF
