@@ -20,7 +20,7 @@ jobs:
           docker tag final alienx01/final
           docker push alienx01/final
 
-    steps:
+#    steps:
       - name: Test
         uses: actions/checkout@v2
 
