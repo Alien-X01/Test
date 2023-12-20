@@ -10,20 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Test
         uses: actions/checkout@v2
 
       - name: Configure SSH Key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/ip_rsa
-          chmod 600 ~/.ssh/ip_rsa
-          ssh-keyscan -t 18.224.65.226 >> ~/.ssh/known_hosts
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa 18.224.65.226 >> ~/.ssh/known_hosts
+
+      - name: Add StrictHostKeyChecking to SSH Config
+        run: echo "StrictHostKeyChecking no" >> ~/.ssh/config
 
       - name: Your Other Steps
         run: |
           # Your other deployment steps here
           ssh admin@18.224.65.226 <<EOF
-          cd
           mkdir pp
-          EOF
