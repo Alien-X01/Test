@@ -12,13 +12,24 @@ jobs:
     steps:
       - name: Test
         uses: actions/checkout@v2
-
-      - name: Configure SSH Key
+      - name: Debugging
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DEBIAN }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -t rsa 3.15.17.62 >> ~/.ssh/known_hosts
+              whoami
+              ls -la ~
+              mkdir -p ~/.ssh
+              ls -la ~/.ssh
+              echo "${{ secrets.DEBIAN }}" > ~/.ssh/id_rsa
+              chmod 600 ~/.ssh/id_rsa
+              ssh-keyscan -t rsa 3.15.17.62 >> ~/.ssh/known_hosts
+              cat ~/.ssh/id_rsa
+              cat ~/.ssh/known_hosts
+
+#      - name: Configure SSH Key
+#        run: |
+#          mkdir -p ~/.ssh
+#          echo "${{ secrets.DEBIAN }}" > ~/.ssh/id_rsa
+#          chmod 600 ~/.ssh/id_rsa
+#          ssh-keyscan -t rsa 3.15.17.62 >> ~/.ssh/known_hosts
 
       - name: Add StrictHostKeyChecking to SSH Config
         run: echo "StrictHostKeyChecking no" >> ~/.ssh/config
