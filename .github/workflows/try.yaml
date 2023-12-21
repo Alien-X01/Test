@@ -1,18 +1,15 @@
-name: Testing
+name: Your Workflow
 
 on:
   push:
     branches:
-      - master  # Change this to your main branch name
+      - master
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
       - name: Test
         uses: actions/checkout@v2
 
@@ -21,7 +18,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.DEBIAN }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -t rsa 3.144.25.55 >> ~/.ssh/known_hosts
+          ssh-keyscan -t rsa 3.15.17.62 >> ~/.ssh/known_hosts
 
       - name: Add StrictHostKeyChecking to SSH Config
         run: echo "StrictHostKeyChecking no" >> ~/.ssh/config
@@ -29,7 +26,7 @@ jobs:
       - name: Your Other Steps
         run: |
           # Your other deployment steps here
-          ssh admin@3.144.25.55 'bash -s' <<'EOF'
+          ssh admin@3.15.17.62 <<EOF
           sudo apt update
           ip a
           sudo apt install docker.io -y
