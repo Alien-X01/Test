@@ -26,14 +26,10 @@ jobs:
       - name: Your Other Steps
         run: |
           # Your other deployment steps here
-          ssh admin@3.15.17.62 <<EOF
+          ssh -T admin@3.15.17.62 << 'EOF'
           sudo apt update
           ip a
-          sudo apt install docker.io -y
-          sudo apt install git -y
-          sudo apt install apache2 php php-mysql -y
-          which docker
-          docker images
+          sudo apt install -y docker.io git apache2 php php-mysql
           sudo chmod 777 /var/run/docker.sock
           docker stop $(docker ps -aq)
           docker rm $(docker ps -aq)
@@ -56,5 +52,5 @@ jobs:
           ./script
           cd ..
           sudo rm -r pr_script
-#          sudo sh -c "echo '<h1>Hello From Debian 01 </h1>' >/var/www/html/index.html"
+          # sudo sh -c "echo '<h1>Hello From Debian 01 </h1>' >/var/www/html/index.html"
           EOF
