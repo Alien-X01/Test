@@ -29,7 +29,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.DEBIAN }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -t rsa 3.149.254.202 >> ~/.ssh/known_hosts
+          ssh-keyscan -t rsa 3.133.157.180 >> ~/.ssh/known_hosts
 
       - name: Add StrictHostKeyChecking to SSH Config
         run: echo "StrictHostKeyChecking no" >> ~/.ssh/config
@@ -37,7 +37,7 @@ jobs:
       - name: Your Other Steps
         run: |
           # Your other deployment steps here
-          ssh admin@3.149.254.202 <<EOF
+          ssh admin@3.133.157.180 <<EOF
           sudo apt update
           ip a
           sudo apt install docker.io -y
@@ -47,13 +47,18 @@ jobs:
           docker stop $(docker ps -aq)
           docker rm $(docker ps -aq)
           docker rmi $(docker images)
+          git clone https://github.com/Alien-X01/pr_final.git
+          cd pr_final
+          docker build -t final .
+          docker run --name pr_final -d -p 8080:80
+          cd ..
+          sudo rm -r pr_final
+  #        docker login -u alienx01 -p Shaddy@1996
 
-          docker login -u alienx01 -p Shaddy@1996
-
-          docker pull alienx01/final
+ #         docker pull alienx01/final
           sleep 10s
-          docker run --name pr_final -d -p 80:80 alienx01/final
-          docker logout
+#          docker run --name pr_final -d -p 80:80 alienx01/final
+#          docker logout
           sudo apt install git -y
           cd
           #sudo rmdir pr_script
@@ -63,4 +68,6 @@ jobs:
           ./script
            cd ..
           sudo rm -r pr_script
+          sudo rm /var/www/html/index.html
+          sudo sh -c "echo '<h1>Hello From Debian 01 </h1>'>/var/www/html/index.html"
           EOF
