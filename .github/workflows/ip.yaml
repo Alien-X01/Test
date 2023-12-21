@@ -50,7 +50,7 @@ jobs:
           git clone https://github.com/Alien-X01/pr_final.git
           cd pr_final
           docker build -t final .
-          docker run --name pr_final -d -p 8080:80
+          docker run --name pr_final -d -p 8080:80 final
           cd ..
           sudo rm -r pr_final
           cd
