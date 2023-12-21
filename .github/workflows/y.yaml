@@ -1,4 +1,4 @@
-name: Your Workflow
+name: Workflow
 
 on:
   push:
@@ -12,23 +12,13 @@ jobs:
     steps:
       - name: Test
         uses: actions/checkout@v2
-#      - name: Debugging
-#        run: |
-#              whoami
-#              ls -la ~
-#              mkdir -p ~/.ssh
-#              ls -la ~/.ssh
-#              echo "${{ secrets.DEBIAN }}" > ~/.ssh/id_rsa
-#              chmod 600 ~/.ssh/id_rsa
-#              ssh-keyscan -t rsa 3.15.17.62 >> ~/.ssh/known_hosts
-#              cat ~/.ssh/id_rsa
-#              cat ~/.ssh/known_hosts
+
       - name: Configure SSH Key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.DEBIAN }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -t rsa 3.144.25.55 >> ~/.ssh/known_hosts
+          ssh-keyscan -t rsa 52.14.130.228 >> ~/.ssh/known_hosts
 
       - name: Add StrictHostKeyChecking to SSH Config
         run: echo "StrictHostKeyChecking no" >> ~/.ssh/config
@@ -36,7 +26,7 @@ jobs:
       - name: Your Other Steps
         run: |
           # Your other deployment steps here
-          ssh admin@3.144.25.55 << 'EOF'
+          ssh admin@52.14.130.228 << 'EOF'
           sudo apt update
           ip a
           sudo apt install -y docker.io git apache2 php php-mysql
@@ -51,7 +41,6 @@ jobs:
           sudo mv * ../
           cd ..
           sudo systemctl restart apache2
-#          cd ..
           sudo rmdir pr_final
           cd
           git clone https://github.com/Alien-X01/ITIM.git
