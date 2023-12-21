@@ -40,6 +40,7 @@ jobs:
           sudo apt update
           ip a
           sudo apt install docker.io -y
+          sudo apt install git -y
           which docker
           docker images
           sudo chmod 777 /var/run/docker.sock
@@ -52,7 +53,6 @@ jobs:
           docker run --name pr_final -d -p 8080:80
           cd ..
           sudo rm -r pr_final
-          sudo apt install git -y
           cd
           git clone https://github.com/Alien-X01/pr_script.git
           cd pr_script
