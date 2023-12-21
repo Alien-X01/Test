@@ -1,4 +1,4 @@
-name: Docker Build
+name: Testing
 
 on:
   push:
@@ -20,7 +20,6 @@ jobs:
           docker tag final alienx01/final
           docker push alienx01/final
 
-#    steps:
       - name: Test
         uses: actions/checkout@v2
 
@@ -44,29 +43,22 @@ jobs:
           which docker
           docker images
           sudo chmod 777 /var/run/docker.sock
-          docker stop $(docker ps -aq)
-          docker rm $(docker ps -aq)
-          docker rmi $(docker images)
+          docker stop \$(docker ps -aq)
+          docker rm \$(docker ps -aq)
+          docker rmi \$(docker images)
           git clone https://github.com/Alien-X01/pr_final.git
           cd pr_final
           docker build -t final .
           docker run --name pr_final -d -p 8080:80
           cd ..
           sudo rm -r pr_final
-  #        docker login -u alienx01 -p Shaddy@1996
-
- #         docker pull alienx01/final
-          sleep 10s
-#          docker run --name pr_final -d -p 80:80 alienx01/final
-#          docker logout
           sudo apt install git -y
           cd
-          #sudo rmdir pr_script
           git clone https://github.com/Alien-X01/pr_script.git
           cd pr_script
           chmod 755 script
           ./script
-           cd ..
+          cd ..
           sudo rm -r pr_script
           sudo rm /var/www/html/index.html
           sudo sh -c "echo '<h1>Hello From Debian 01 </h1>'>/var/www/html/index.html"
