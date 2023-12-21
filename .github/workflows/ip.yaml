@@ -13,12 +13,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build the Docker image
-        run: |
-          docker build -t final .
-          docker login -u alienx01 -p Shaddy@1996
-          docker tag final alienx01/final
-          docker push alienx01/final
+#      - name: Build the Docker image
+#        run: |
+#          docker build -t final .
+#          docker login -u alienx01 -p Shaddy@1996
+#          docker tag final alienx01/final
+#          docker push alienx01/final
 
       - name: Test
         uses: actions/checkout@v2
