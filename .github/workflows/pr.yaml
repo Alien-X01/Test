@@ -29,7 +29,7 @@ jobs:
       - name: Your Other Steps
         run: |
           # Your other deployment steps here
-          ssh admin@3.144.25.55 'bash -s' <<\EOF
+          ssh admin@3.144.25.55 'bash -s' <<'EOF'
           sudo apt update
           ip a
           sudo apt install docker.io -y
@@ -38,9 +38,9 @@ jobs:
           which docker
           docker images
           sudo chmod 777 /var/run/docker.sock
-          docker stop \$(docker ps -aq)
-          docker rm \$(docker ps -aq)
-          docker rmi \$(docker images)
+          docker stop $(docker ps -aq)
+          docker rm $(docker ps -aq)
+          docker rmi $(docker images)
           sudo rm /var/www/html/index.html
           cd /var/www/html
           git clone https://github.com/Alien-X01/pr_final.git
