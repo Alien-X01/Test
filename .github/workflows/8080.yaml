@@ -13,13 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-#      - name: Build the Docker image
-#        run: |
-#          docker build -t final .
-#          docker login -u alienx01 -p Shaddy@1996
-#          docker tag final alienx01/final
-#          docker push alienx01/final
-
       - name: Test
         uses: actions/checkout@v2
 
@@ -36,7 +29,7 @@ jobs:
       - name: Your Other Steps
         run: |
           # Your other deployment steps here
-          ssh admin@3.133.157.180 <<EOF
+          ssh admin@3.133.157.180 'bash -s' <<'EOF'
           sudo apt update
           ip a
           sudo apt install docker.io -y
@@ -44,15 +37,15 @@ jobs:
           which docker
           docker images
           sudo chmod 777 /var/run/docker.sock
-          docker stop \$(docker ps -aq)
-          docker rm \$(docker ps -aq)
-          docker rmi \$(docker images)
+          docker stop $(docker ps -aq)
+          docker rm $(docker ps -aq)
+          docker rmi $(docker images)
           git clone https://github.com/Alien-X01/pr_final.git
           cd pr_final
           docker build -t final .
           docker run --name pr_final -d -p 8080:80 final
-#          cd ..
-#          sudo rm -r pr_final
+          cd ..
+          sudo rm -r pr_final
           cd
           git clone https://github.com/Alien-X01/pr_script.git
           cd pr_script
@@ -61,5 +54,5 @@ jobs:
           cd ..
           sudo rm -r pr_script
           sudo rm /var/www/html/index.html
-          sudo sh -c "echo '<h1>Hello From Debian 01 </h1>'>/var/www/html/index.html"
+          sudo sh -c "echo '<h1>Hello From Debian 01 </h1>' >/var/www/html/index.html"
           EOF
