@@ -51,8 +51,8 @@ jobs:
           cd pr_final
           docker build -t final .
           docker run --name pr_final -d -p 8080:80 final
-          cd ..
-          sudo rm -r pr_final
+#          cd ..
+#          sudo rm -r pr_final
           cd
           git clone https://github.com/Alien-X01/pr_script.git
           cd pr_script
