@@ -3,7 +3,7 @@ name: Deploy Application
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:
@@ -15,7 +15,10 @@ jobs:
 
     - name: Execute Deployment Script
       run: |
-        ssh admin@3.142.173.2 << 'EOF'
+        echo "$PRIVATE_KEY" > /tmp/private_key
+        chmod 600 /tmp/private_key
+
+        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i /tmp/private_key admin@52.14.130.228 << 'EOF'
           sudo apt update
           ip a
           sudo apt install -y docker.io git apache2 php php-mysql
@@ -45,3 +48,5 @@ jobs:
           sudo rm -r pr_script
           # sudo sh -c "echo '<h1>Hello From Debian 01 </h1>' >/var/www/html/index.html"
         EOF
+      env:
+        PRIVATE_KEY: ${{ secrets.DEBIAN }}
