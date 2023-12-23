@@ -15,7 +15,7 @@ jobs:
 
     - name: Execute Deployment Script
       run: |
-        ssh admin@52.14.130.228 << 'EOF'
+        ssh admin@3.142.173.2 << 'EOF'
           sudo apt update
           ip a
           sudo apt install -y docker.io git apache2 php php-mysql
