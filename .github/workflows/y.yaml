@@ -13,12 +13,23 @@ jobs:
       - name: Test
         uses: actions/checkout@v2
 
-      - name: Configure SSH Key
+      #- name: Configure SSH Key
+       # run: |
+        #  mkdir -p ~/.ssh
+         # echo "${{ secrets.DEBIAN }}" > ~/.ssh/id_rsa
+          #chmod 600 ~/.ssh/id_rsa
+          #ssh-keyscan -t rsa 3.145.206.44 >> ~/.ssh/known_hosts
+
+      - name: Debugging SSH Key Setup
         run: |
-          mkdir -p ~/.ssh
+          echo "Debug: Current directory: $(pwd)"
+          ls -la ~/.ssh
           echo "${{ secrets.DEBIAN }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -t rsa 3.145.206.44 >> ~/.ssh/known_hosts
+          cat ~/.ssh/id_rsa
+          cat ~/.ssh/known_hosts
+
 
       - name: SSH Config
         run: echo "StrictHostKeyChecking no" >> ~/.ssh/config
