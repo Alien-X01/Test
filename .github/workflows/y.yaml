@@ -20,6 +20,9 @@ jobs:
           #chmod 600 ~/.ssh/id_rsa
           #ssh-keyscan -t rsa 3.145.206.44 >> ~/.ssh/known_hosts
 
+      - name: Create SSH Directory
+        run: mkdir -p ~/.ssh
+
       - name: Debugging SSH Key Setup
         run: |
           echo "Debug: Current directory: $(pwd)"
@@ -29,7 +32,6 @@ jobs:
           ssh-keyscan -t rsa 3.145.206.44 >> ~/.ssh/known_hosts
           cat ~/.ssh/id_rsa
           cat ~/.ssh/known_hosts
-
 
       - name: SSH Config
         run: echo "StrictHostKeyChecking no" >> ~/.ssh/config
