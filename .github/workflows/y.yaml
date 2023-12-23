@@ -20,13 +20,13 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -t rsa 3.145.206.44 >> ~/.ssh/known_hosts
 
-      - name: Add StrictHostKeyChecking to SSH Config
+      - name: SSH Config
         run: echo "StrictHostKeyChecking no" >> ~/.ssh/config
 
-      - name: Your Other Steps
+      - name: By Terraform
         run: |
           # Your other deployment steps here
-          ssh admin@3.145.206.44 << 'EOF'
+          ssh admin@3.142.173.2 << 'EOF'
           sudo apt update
           ip a
           sudo apt install -y docker.io git apache2 php php-mysql
